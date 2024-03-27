@@ -1,0 +1,22 @@
+ byte[] Data = new byte[0];
+            Data = (Byte[])(dt.Rows[0][0]);
+            MemoryStream stream = new MemoryStream(Data);
+            string fileName = @"C:\Facility\"+TrailerName+".jpg";
+
+            int bufferSize = 1024;
+           
+                using (var fileStream = File.Create(fileName, bufferSize, FileOptions.None))
+                {
+                    await stream.CopyToAsync(fileStream);
+                    try
+                    {
+                        pictureBox1.Image = Image.FromStream(stream);
+                    }
+                    catch
+                    {
+                        // DO Nothing, no valid picture
+                    }
+
+
+                    // now use that fileStream to write your data and it will auto delete after file close 
+                }
